@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.canos</groupId>
+    <artifactId>super-rule</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+    <name>Canos Super Rule</name>
+    <description>
+        Validation Rules.
+    </description>
+
+    <properties>
+
+        <!-- maven-enforcer-plugin -->
+        <maven-enforcer-plugin_version>1.4.1</maven-enforcer-plugin_version>
+
+        <!-- extra-enforcer-rules-pugin  -->
+        <extra-enforcer-rules_version>1.0-beta-7</extra-enforcer-rules_version>
+
+        <enforcer.requireVersion.skip>false</enforcer.requireVersion.skip>
+        <enforcer.requireVersion.onerror.fail>true</enforcer.requireVersion.onerror.fail>
+
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin_version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>${extra-enforcer-rules_version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <!-- Usage http://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
+                <!-- Built-In-Rules http://maven.apache.org/enforcer/enforcer-rules/index.html -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+
+                <executions>
+
+                    <execution>
+                        <id>ban-duplicate-class-enforce</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+
+                                <!-- extra-enforcer-rules: http://www.mojohaus.org/extra-enforcer-rules -->
+                                <banDuplicateClasses>
+                                    <findAllDuplicates>true</findAllDuplicates>
+                                </banDuplicateClasses>
+
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <rules>
+
+                        <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/requireMavenVersion.html -->
+                        <requireMavenVersion>
+                            <version>[3.3.9,)</version>
+                        </requireMavenVersion>
+
+                        <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/requireJavaVersion.html -->
+                        <requireJavaVersion>
+                            <version>[${java.version}.0,)</version>
+                        </requireJavaVersion>
+
+                    </rules>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
