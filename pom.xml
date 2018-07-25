@@ -35,6 +35,31 @@
         </license>
     </licenses>
 
+    <scm>
+        <url>https://github.com/canos-oss/canos-super-rule</url>
+        <connection>scm:git:git://github.com/canos-oss/canos-super-rule.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/canos-oss/canos-super-rule.git</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>harriszhang</id>
+            <name>Harris Zhang</name>
+            <email>harriszhang@live.cn</email>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
 
         <!-- maven-enforcer-plugin -->
@@ -45,6 +70,10 @@
 
         <enforcer.requireVersion.skip>false</enforcer.requireVersion.skip>
         <enforcer.requireVersion.onerror.fail>true</enforcer.requireVersion.onerror.fail>
+
+        <maven-gpg-plugin_version>1.6</maven-gpg-plugin_version>
+
+        <nexus-staging-maven-plugin_version>1.6.8</nexus-staging-maven-plugin_version>
 
     </properties>
 
@@ -62,6 +91,16 @@
                             <version>${extra-enforcer-rules_version}</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin_version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven-plugin_version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -110,6 +149,31 @@
                     </rules>
                 </configuration>
 
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
             </plugin>
         </plugins>
     </build>
