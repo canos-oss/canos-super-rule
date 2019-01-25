@@ -20,7 +20,7 @@
 
     <groupId>cn.canos</groupId>
     <artifactId>super-rule</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <packaging>pom</packaging>
 
@@ -70,6 +70,8 @@
 
         <enforcer.requireVersion.skip>false</enforcer.requireVersion.skip>
         <enforcer.requireVersion.onerror.fail>true</enforcer.requireVersion.onerror.fail>
+
+        <gpg.skip>true</gpg.skip>
 
         <maven-gpg-plugin_version>1.6</maven-gpg-plugin_version>
 
@@ -154,6 +156,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
+                <configuration>
+                    <skip>${gpg.skip}</skip>
+                </configuration>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
