@@ -20,7 +20,7 @@
 
     <groupId>cn.canos</groupId>
     <artifactId>super-rule</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <packaging>pom</packaging>
 
@@ -115,42 +115,35 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
 
                 <executions>
-
                     <execution>
                         <id>ban-duplicate-class-enforce</id>
-                        <phase>compile</phase>
                         <goals>
                             <goal>enforce</goal>
                         </goals>
                         <configuration>
                             <rules>
-
                                 <!-- extra-enforcer-rules: http://www.mojohaus.org/extra-enforcer-rules -->
                                 <banDuplicateClasses>
                                     <findAllDuplicates>true</findAllDuplicates>
                                 </banDuplicateClasses>
-
+                                <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/requireMavenVersion.html -->
+                                <requireMavenVersion>
+                                    <version>[3.3.9,)</version>
+                                </requireMavenVersion>
+                                <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/requireJavaVersion.html -->
+                                <requireJavaVersion>
+                                    <version>[1.8.0,)</version>
+                                </requireJavaVersion>
+                                <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/bannedDependencies.html -->
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>log4j:log4j</exclude>
+                                    </excludes>
+                                </bannedDependencies>
                             </rules>
                         </configuration>
                     </execution>
                 </executions>
-
-                <configuration>
-                    <rules>
-
-                        <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/requireMavenVersion.html -->
-                        <requireMavenVersion>
-                            <version>[3.3.9,)</version>
-                        </requireMavenVersion>
-
-                        <!-- Built-In Rules http://maven.apache.org/enforcer/enforcer-rules/requireJavaVersion.html -->
-                        <requireJavaVersion>
-                            <version>[1.8.0,)</version>
-                        </requireJavaVersion>
-
-                    </rules>
-                </configuration>
-
             </plugin>
 
             <plugin>
